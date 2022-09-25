@@ -34,8 +34,10 @@ const UserSchema = new Schema({
       this.password = await bcrypt.hash(this.password, salt);
     });
 
-    UserSchema.methods.comparePassword = async function (candidatePassword) {
-      const isMatch = await bcrypt.compare(candidatePassword, this.password)
+    UserSchema.methods.comparePassword = function (candidatePassword, func) {
+      const isMatch = bcrypt.compare(candidatePassword, this.password, (err, result) => {
+        func(err, result)
+      })
       return isMatch
     }
 

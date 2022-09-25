@@ -3,25 +3,33 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/User");
 
 const passport_init = () => {
- //setting up the LocalStrategy
-//function acts a bit like a middleware and will be called for us when we ask passport to do the authentication later.
-passport.use(
-    new LocalStrategy((email, password, done) => {
-      User.findOne({ email: email }, (err, user) => {
+  //setting up the LocalStrategy
+  //function acts a bit like a middleware and will be called for us when we ask passport to do the authentication later.
+  passport.use(
+    new LocalStrategy((username, password, done) => {
+      console.log(username, password, "Credentials");
+
+      User.findOne({ email: username }, (err, user) => {
+        //compare email
         if (err) {
           return done(err);
         }
         if (!user) {
-          return done(null, false, { message: "Incorrect username" });
+          return done(null, false, { message: 'That email is not registered' });
         }
-        const isPasswordCorrect = async () => {return await user.comparePassword(password)};
-        if(!isPasswordCorrect){
-            return done(null, false, { message: "Incorrect password" });
+        //compare password
+        user.comparePassword(password, (err, isPasswordCorrect) => {
+          if (err) throw err;
+          if (!isPasswordCorrect) {
+            return done(null, false, {  message: 'Password incorrect'  });
+          }else {
+          return done(null, user);
           }
+        });
       });
     })
   );
-  
+
   passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
