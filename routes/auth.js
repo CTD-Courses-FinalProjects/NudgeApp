@@ -1,20 +1,27 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
 const {
   render_index, 
   render_signup,
-  register, 
-  login,
+  register,
   render_login, 
   log_out, 
   render_restricted
 } = require("../controllers/auth");
+const {authenticateUser} = require("../middleware/authentication")
 
 router.route("/").get(render_index);
-router.route("/dashboard").get(render_restricted);
+router.route("/dashboard").get(authenticateUser, render_restricted);
 router.route("/register").get(render_signup).post(register);
-router.route("/login").get(render_login).post(login);
+router.route("/login").get(render_login).post(
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/login",
+    failureMessage: true
+  })
+);
 router.route("/log-out").get(log_out);
 
 module.exports = router;

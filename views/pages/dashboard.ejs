@@ -1,19 +1,11 @@
     <main class="container" style="margin: 70px 16px; text-align:center">
       <% messages.forEach((msg) =>{ %>
       <p><%= msg %></p>
-      <% }) %> <% if (currentUser) {%>
-      <h1>WELCOME BACK <%= currentUser.username %></h1>
-      <a href="/log-out">LOG OUT</a>
+      <% }) %>
+       <% if (currentUser) {%>
+      <h1>WELCOME BACK <%= currentUser.name.toUpperCase() %></h1>
       <% } else {%>
-      <h1>please log in</h1>
-      <form action="/log-in" method="POST">
-        <label for="username">Username</label>
-        <input name="username" placeholder="username" type="text" /><br /><br />
-        <label for="password">Password</label>
-        <input name="password" type="password" /><br /><br />
-        <button class="btn btn-primary">Log In</button>
-        <a href="/sign-up">sign-up</a>
-      </form>
+      <h1>You are not authorized to view this page. Please login.</h1>""
       <% } %>
     </main>
 

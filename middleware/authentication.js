@@ -1,4 +1,4 @@
-// const { UnauthenticatedError } = require("../errors");
+
 
 const authenticateUser = (req, res, next) => {
   if (!req.user) {
@@ -7,7 +7,6 @@ const authenticateUser = (req, res, next) => {
     }
     req.session.messages.push("You can't access that page before logon.")
     res.redirect('/')
-    // throw new UnauthenticatedError("Authentication invalid");
   } else {
     next()
   }
