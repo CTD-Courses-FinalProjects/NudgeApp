@@ -1,22 +1,24 @@
 require("dotenv").config();
 require("express-async-errors");
-
+const favicon = require('serve-favicon')
+const path = require('path')
 
 //extra security packages
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
 
+//Express and EJS Layout
 const express = require("express");
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
-app.use(expressLayouts)
+app.use(expressLayouts);
 
 //session and passport
 const session = require("express-session");
-// const passport = require("passport");
-// const passport_init = require("./passport/passport_init");
+const passport = require("passport");
+const passport_init = require("./passport/passport_init");
 
 //connectDB
 const {connectDB, storeDB} = require('./db/connect')
@@ -28,8 +30,8 @@ const { authenticateUser, setCurrentUser } = require("./middleware/authenticatio
 // const eventRouter = require('./routes/events');
 const authRouter = require("./routes/auth");
 
-// //error handler
-// // const errorHandlerMiddleware = require("./middleware/error-handler");
+//error handler
+const errorHandlerMiddleware = require("./middleware/error-handler");
 const notFoundMiddleware = require("./middleware/not-found");
 
 
@@ -45,15 +47,13 @@ app.use(
   })
 )
 app.use(express.json());
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 app.use(xss());
 
 //Use files from public folder
 app.use(express.static('public'))
-
-// Express body parser
-app.use(express.urlencoded({ extended: true }));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 //save the session in mongo
 //validate env variables
@@ -73,22 +73,23 @@ app.use(
   })
 );
 
-// passport_init();
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(express.urlencoded({ extended: false }));
+passport_init();
+app.use(passport.initialize());
+app.use(passport.session());
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
 app.use(setCurrentUser);
 
-
-// //routes
+//routes
 app.use("/", authRouter)
-app.use("/api/v1/auth", authRouter);
-// app.use("/api/v1/events", authenticateUser, eventRouter);
+//app.use("/api/v1/events", authenticateUser, eventRouter);
 
 app.use(notFoundMiddleware);
-// // app.use(errorHandlerMiddleware);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.port || 3000;
+
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);

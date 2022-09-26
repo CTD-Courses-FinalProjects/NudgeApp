@@ -17,13 +17,15 @@ store.on('error', function (error) {
 return store;
 }
 
-
 const connectDB = (url) => {
-const db = mongoose.createConnection(url, { 
-  useUnifiedTopology: true, 
-  useNewUrlParser: true 
-});
-// Catch errors
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
+// const db = mongoose.connection(url, { 
+//   useUnifiedTopology: true, 
+//   useNewUrlParser: true 
+// });
+// // Catch errors
 db.on("error", console.error.bind(console, "mongo connection error"));
 return db;
 }
