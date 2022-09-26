@@ -1,7 +1,6 @@
     <main class="container" style="margin: 70px 16px; text-align:center">
-      <% messages.forEach((msg) =>{ %>
-      <p><%= msg %></p>
-      <% }) %>
+     <%- include("../partials/messages") %>
+     
        <% if (currentUser) {%>
       <h1>WELCOME BACK <%= currentUser.name.toUpperCase() %></h1>
       <% } else {%>
