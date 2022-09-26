@@ -5,12 +5,7 @@ const render_index = (req, res) => {
 };
 
 const render_signup = (req, res) => {
-  let messages = [];
-  if (req.session.messages) {
-    messages = req.session.messages;
-  }
-  req.session.messages = [];
-  res.render("pages/register", { messages });
+  res.render("pages/register");
 };
 
 const render_login = async (req, res) => {
@@ -18,12 +13,7 @@ const render_login = async (req, res) => {
 };
 
 const render_restricted = (req, res) => {
-  let messages = [];
-  if (req.session.messages) {
-    messages = req.session.messages;
-  }
-  req.session.messages = [];
-  res.render("pages/dashboard", { messages });
+  res.render("pages/dashboard");
 };
 
 const register = async (req, res, next) => {
@@ -35,7 +25,7 @@ const register = async (req, res, next) => {
       password: password,
     });
     req.flash("success_msg", "You are now registered and can log in");
-    res.redirect("/login");
+    res.redirect("/api/v1/auth/login");
   } catch (err) {
     return next(err);
   }
