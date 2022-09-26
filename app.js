@@ -2,6 +2,7 @@ require("dotenv").config();
 require("express-async-errors");
 const favicon = require('serve-favicon')
 const path = require('path')
+const flash = require('connect-flash');
 
 //extra security packages
 // const helmet = require('helmet');
@@ -24,11 +25,12 @@ const passport_init = require("./passport/passport_init");
 const {connectDB, storeDB} = require('./db/connect')
 
 // //middleware
-const { authenticateUser, setCurrentUser } = require("./middleware/authentication");
+const { authenticateUser, protectIndex, setCurrentUser } = require("./middleware/authentication");
 
 // //routers
 // const eventRouter = require('./routes/events');
 const authRouter = require("./routes/auth");
+const render_index  = require("./routes/auth")
 
 //error handler
 const errorHandlerMiddleware = require("./middleware/error-handler");
@@ -37,6 +39,10 @@ const notFoundMiddleware = require("./middleware/not-found");
 
 //connect to views
 app.set("view engine", "ejs");
+
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
 
 //use the security packages
 app.set('trust proxy', 1);
@@ -64,10 +70,11 @@ requiredEnvVars.forEach((item) => {
  }
 });
 
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     store: storeDB(process.env.MONGO_URI),
   })
@@ -76,13 +83,24 @@ app.use(
 passport_init();
 app.use(passport.initialize());
 app.use(passport.session());
-// Express body parser
-app.use(express.urlencoded({ extended: true }));
+
 
 app.use(setCurrentUser);
 
+// Connect flash
+app.use(flash());
+
+// Global variables
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
 //routes
-app.use("/", authRouter)
+app.get("/", protectIndex, render_index)
+app.use("/api/v1/auth", authRouter)
 //app.use("/api/v1/events", authenticateUser, eventRouter);
 
 app.use(notFoundMiddleware);
@@ -102,3 +120,8 @@ const start = async () => {
 };
 
 start();
+
+
+//  <% messages.forEach((msg) =>{ %>
+{/* <p><%= msg %></p>
+<%})%> */}

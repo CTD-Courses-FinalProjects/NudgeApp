@@ -1,14 +1,15 @@
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body">
+    <%- include("../partials/messages") %>
       <h1 class="text-center mb-3">
         <i class="fas fa-user-plus"></i> Register
       </h1>
-      <form action="/register" method="POST">
+      <form action="/api/v1/auth/register" method="POST">
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name" class="form-label">Name</label>
           <input
-            type="name"
+            type="text"
             id="name"
             name="name"
             class="form-control"
@@ -16,9 +17,11 @@
             value="<%= typeof name != 'undefined' ? name : '' %>"
             onchange="continueButton()"
           />
+          <div class="valid-feedback">Looks good!</div>
         </div>
+
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email" class="form-label">Email</label>
           <input
             type="email"
             id="email"
@@ -28,9 +31,11 @@
             value="<%= typeof email != 'undefined' ? email : '' %>"
             onchange="continueButton()"
           />
+          <div class="valid-feedback">Looks good!</div>
         </div>
+
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password" class="form-label">Password</label>
           <input
             type="password"
             id="password"
@@ -40,9 +45,12 @@
             value="<%= typeof password != 'undefined' ? password : '' %>"
             onchange="continueButton()"
           />
+          <div class="valid-feedback">Looks good!</div>
+          <p id="validatePassword" style="color: red"></p>
         </div>
+
         <div class="form-group has-danger">
-          <label for="password2">Confirm Password</label>
+          <label for="password2" class="form-label">Confirm Password</label>
           <input
             type="password"
             id="password2"
@@ -52,8 +60,10 @@
             value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
             onchange="continueButton()"
           />
-          <p id="wrongPassword" style="color:red"></p>
+          <div class="valid-feedback">Password matched!</div>
+          <p id="wrongPassword" style="color: red"></p>
         </div>
+
         <button
           type="submit"
           id="submit"
@@ -61,11 +71,14 @@
           disabled
           onclick="spinner()"
         >
-        <span class="spinner-border spinner-border-sm" style="display:none"></span>
+          <span
+            class="spinner-border spinner-border-sm"
+            style="display: none"
+          ></span>
           Register
         </button>
       </form>
-      <p class="lead mt-4">Have An Account? <a href="/login">Login</a></p>
+      <p class="lead mt-4">Have An Account? <a href="/api/v1/auth/login">Login</a></p>
     </div>
   </div>
 </div>
@@ -73,26 +86,61 @@
 <script>
   function continueButton() {
     console.log(document.getElementById("password2").value);
+    console.log(document.getElementById("password").value);
     const name = document.getElementById("name");
     const email = document.getElementById("email");
     const password = document.getElementById("password");
     const password2 = document.getElementById("password2");
 
-    if (name.value && email.value && password.value && password2.value) {
-      if (password2.value === password.value) {
-        document.getElementById("submit").removeAttribute("disabled");
-        document.getElementById("wrongPassword").innerText = "";
+    //validate name
+    if (!name.value) {
+      name.setAttribute("class", " form-control is-invalid");
+    } else {
+      name.setAttribute("class", " form-control is-valid");
+    }
+
+    //validate email
+
+    if (email.value) {
+      const emailval = email.value.toLowerCase();
+      const validEmail = emailval.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+      if (validEmail) {
+        email.setAttribute("class", " form-control is-valid");
       } else {
+        email.setAttribute("class", " form-control is-invalid");
+      }
+    }
+
+    // va;lidate length of password
+    if (password.value.length < 6) {
+      password.setAttribute("class", " form-control is-invalid");
+      document.getElementById("validatePassword").innerText =
+        "Password must be at least 6 characters";
+    } else {
+      password.setAttribute("class", "form-control is-valid");
+      document.getElementById("validatePassword").innerText = "";
+    }
+
+    //validate password2 and submit button is enabled
+    if (name.value && email.value && password.value && password2.value) {
+      if (password2.value !== password.value) {
+        password2.setAttribute("class", " form-control is-invalid");
         document.getElementById("submit").setAttribute("disabled", "");
         document.getElementById("wrongPassword").innerText =
           "That password doesnt match!";
+      } else {
+        password2.setAttribute("class", "form-control is-valid");
+        document.getElementById("submit").removeAttribute("disabled");
+        document.getElementById("wrongPassword").innerText = "";
       }
     } else {
-    document.getElementById("submit").setAttribute("disabled", "");
+      document.getElementById("submit").setAttribute("disabled", "");
     }
   }
 
-function spinner() {
-  document.getElementById("submit")[0].style.display = "block";
- }
+  function spinner() {
+    document.getElementById("submit")[0].style.display = "block";
+  }
 </script>

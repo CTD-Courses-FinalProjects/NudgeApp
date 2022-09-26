@@ -1,18 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" style="margin-left: 20px" href="/dashboard">
+    <a class="navbar-brand" style="margin-left: 20px" href="/api/v1/auth/dashboard">
       <img src="/logo.png" alt="logo" style="width: 40px" />
     </a>
     <% if(currentUser) {%>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="true" aria-label="Toggle navigation">
+      <button class="navbar-toggler" 
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarColor03"
+      aria-controls="navbarColor03"
+      aria-expanded="true"
+      aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    <div class="navbar-collapse collapse" id="navbarColor03">
+    <div 
+    class="navbar-collapse collapse" 
+    id="navbarColor03"
+    style="text-align:right; margin-right: 20px;">
       <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item">
-          <a class="nav-link" href="/events">All Events</a>
-        </li>
 
         <li class="nav-item">
           <a class="nav-link" href="/upcomingEvents">Upcoming</a>
@@ -23,7 +28,7 @@
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a
-            class="dropdown-toggle nav-link"
+            class="nav-link dropdown-toggle "
             data-bs-toggle="dropdown"
             href="#"
             aria-haspopup="true"
@@ -31,8 +36,8 @@
             >
             <%= currentUser.name %>
             </a>
-          <div class="dropdown-menu show">
-            <a class="dropdown-item" href="/log-out">Sign-out</a>
+          <div class="dropdown-menu text-sm-right margin-sm-auto" style="width: fit-content;">
+            <a class="dropdown-item" href="/api/v1/auth/log-out" >Sign-out</a>
           </div>
         </li>
       </ul>

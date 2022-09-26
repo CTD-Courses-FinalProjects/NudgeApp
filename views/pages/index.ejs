@@ -2,15 +2,16 @@
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body text-center">
+      <%- include("../partials/messages") %>
       <div>
           <img src="/logo.png" alt="logo" style="width:100px"> 
       </div>
       <h2>WELCOME to Nudge</h2>
       <h4>Create an account or login</h4>
-      <a href="/register" class="btn btn-primary btn-block mb-2"
+      <a href="/api/v1/auth/register" class="btn btn-primary btn-block mb-2"
         >Register</a
       >
-      <a href="/login" class="btn btn-secondary btn-block">Login</a>
+      <a href="/api/v1/auth/login" class="btn btn-secondary btn-block">Login</a>
     </div>
   </div>
 </div>
