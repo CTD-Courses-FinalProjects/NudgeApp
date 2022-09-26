@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 
-const errorHandlerMiddleware = (err, req, res, next) => {
+const errorHandlerMiddleware = (err, req, res) => {
   let customError = {
     //set default
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
@@ -12,14 +12,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     customError.msg =Object.values(err.errors)
     .map(item => item.message).join(', ')
       customError.statusCode = 400;
-    //   res.redirect('pages/register')
   }
 
   //Error for Duplicate email registration
     if (err.code && err.code === 11000) {
-        customError.msg = `Duplicate!! ${Object.keys(err.keyValue)} already exists in our system. field, please choose another value`;
+        customError.msg = `Duplicate!! ${Object.keys(err.keyValue)} already exists in our system. Please choose another value`;
         customError.statusCode = 400;
-    // res.render('pages/register', {customError})
   }
 
   if (err.name === 'CastError') {
@@ -27,6 +25,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     customError.statusCode = 404
   }
 
+  req.flash("error",[customError.msg] )
   req.session.messages = [customError.msg];
   return res.redirect("back");
 };

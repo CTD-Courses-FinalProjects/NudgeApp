@@ -12,15 +12,17 @@ const {
 } = require("../controllers/auth");
 const {authenticateUser} = require("../middleware/authentication")
 
+
 router.route("/").get(render_index);
 router.route("/dashboard").get(authenticateUser, render_restricted);
 router.route("/register").get(render_signup).post(register);
 router.route("/login").get(render_login).post(
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/login",
-    failureMessage: true
-  })
+    successRedirect: "/api/v1/auth/dashboard",
+    failureRedirect: "/api/v1/auth/login",
+    failureMessage: true,
+    failureFlash : true
+})
 );
 router.route("/log-out").get(log_out);
 
