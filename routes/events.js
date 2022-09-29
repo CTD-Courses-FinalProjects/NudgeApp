@@ -6,7 +6,7 @@ const {
   render_myEvents,
   getEvent,
   createEvent,
-  updateEvent,
+
   deleteEvent,
   
 } = require("../controllers/events");
@@ -17,7 +17,6 @@ router.route("/addEvent").get(render_addEvent).post(createEvent);
 router
   .route("/event/:id")
   .get(getEvent)
-  .patch(updateEvent)
   .delete(deleteEvent);
 
 module.exports = router;

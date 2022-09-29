@@ -31,6 +31,7 @@ const createEvent = async (req, res, next) => {
     req.flash("success_msg", "Your event was created.");
     res.redirect("/api/v1/events/myEvents");
   } catch (err) {
+    console.log("Error has occured")
     return next(err);
   }
 };
@@ -47,9 +48,9 @@ const getEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   const {
-    body: { company, position },
+    body: {company, product},
     user: { userId },
-    params: { id: jobId },
+    params: { id: eventid },
   } = req;
 
   if (company === "" || position === " ") {
@@ -93,6 +94,5 @@ module.exports = {
   render_myEvents,
   createEvent,
   getEvent,
-  updateEvent,
   deleteEvent,
 };
