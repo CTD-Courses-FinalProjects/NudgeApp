@@ -8,17 +8,14 @@ const {
   register,
   render_login, 
   log_out, 
-  render_restricted
 } = require("../controllers/auth");
-const {authenticateUser} = require("../middleware/authentication")
 
 
 router.route("/").get(render_index);
-router.route("/dashboard").get(authenticateUser, render_restricted);
 router.route("/register").get(render_signup).post(register);
 router.route("/login").get(render_login).post(
   passport.authenticate("local", {
-    successRedirect: "/api/v1/auth/dashboard",
+    successRedirect: "/api/v1/events/dashboard",
     failureRedirect: "/api/v1/auth/login",
     failureMessage: true,
     failureFlash : true

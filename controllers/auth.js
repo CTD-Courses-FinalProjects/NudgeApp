@@ -12,10 +12,6 @@ const render_login = async (req, res) => {
   res.render("pages/login");
 };
 
-const render_restricted = (req, res) => {
-  res.render("pages/dashboard");
-};
-
 const register = async (req, res, next) => {
   const { name, email, password } = { ...req.body };
   try {
@@ -51,5 +47,4 @@ module.exports = {
   register,
   render_login,
   log_out,
-  render_restricted,
 };

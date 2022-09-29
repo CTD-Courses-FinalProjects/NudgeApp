@@ -1,0 +1,65 @@
+<div style="text-align: center; height: 100%; width: 100%">
+  <%- include("../partials/messages") %>
+
+  <div class="container mt-4">
+    <div class="jumbotron">
+      <h1 class="text-center mb-3"><i class="far fa-id-card"></i> My Events</h1>
+      <div class="d-flex flex-column">
+      <a
+        href="/api/v1/events/addEvent"
+        class="btn btn-primary"
+        style="width: 50px"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        title="Add Task"
+        aria-describedby="tooltip758359"
+      >
+        <i class="fas fa-plus"></i>
+      </a>
+      <div class="d-flex m-3 flex-wrap">
+      <% if (events.length > 0) { %> 
+        <% events.forEach(function(event){ %>
+      <div class="card text-white mb-3 d-flex"
+      style="max-width: 20rem; margin:10px; min-width: 246px; border-radius: 30%; background-color: <%= event.eventType === 'birthday' ? '#6F077F' : '#F4A424' %>"
+      
+      >
+        <div class="card-header" style="text-transform: capitalize; background-color: transparent;">
+         <h5><%= event.eventType %></h5> 
+        </div>
+        <div class="card-body">
+          <h4 class="card-title"><%= event.title %></h4>
+          <h6 class="card-text">
+            <%= event.eventDate.toString().split('T')[0] %>
+          </h6>
+          
+          <% if(event.eventType === 'birthday') { %>
+          <p class="card-text">years</p>
+          <%}%>
+          <div>
+            <a href=<%= "/events/edit/" + event._id %> class="btn btn">
+              <i class="fas fa-pen" style="color: white"></i>
+            </a>
+            <a href=<%= "/events/delete/" + event._id %> class="btn btn">
+              <i class="far fa-trash-alt" style="color: white"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <%})%>
+    </div>
+      <% } else { %>
+      <h2>There are no events to display.</h2>
+      <% } %>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+</script>

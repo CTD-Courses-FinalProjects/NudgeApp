@@ -1,11 +1,66 @@
-    <main class="container" style="margin: 70px 16px; text-align:center">
-     <%- include("../partials/messages") %>
-     
-       <% if (currentUser) {%>
-      <h1>WELCOME BACK <%= currentUser.name.toUpperCase() %></h1>
+<div style="text-align: center; height: 100%; width: 100%">
+  <div style="height: 200px; width: 100%" class="mb-4">
+    <img
+      src="/Images/party_banner.png"
+      alt="banner"
+      style="object-fit: fill; height: 100%; width: 100%"
+    />
+  </div>
+  <%- include("../partials/messages") %> <% if (currentUser) {%>
+
+  <h1 class="textTransform: capitalize">Welcome <%= currentUser.name %> !!</h1>
+
+  <div class="container mt-4">
+    <h5>Let Nudge help track all your events while you have all the FUN!!!</h5>
+    <p>
+      We are a free app which will track all your events and remind you of them
+      as they come. You can also send gifts with your Send a gift feature.
+    </p>
+
+    <div
+      class="d-flex flex-wrap p-5"
+      style="justify-content: space-evenly; align-items: center"
+    >
+    <div class="p-4">
+    <div style="height: 200px;" class="mb-4">
+      <a href="/api/v1/events/myEvents">
+      <img
+        src="/Images/party.png"
+        alt="All my events"
+        style="object-fit: cover; height: 100%; width: 100%"
+      />
+      </a>
+    </div>
+      <span>
+        <h4>Check My Events</h4>
+        <caption>
+          we are tracking for you..
+        </caption>
+      </span>
+    </div>
+
+    <div class="p-4 align-items: center">
+      <div style="height: 200px;" class="mb-4">
+        <a href="/api/v1/events/addEvent">
+        <img
+          src="/Images/Add_Event.png"
+          alt="All events"
+          style="object-fit: cover; height: 100%; width: 100%"
+        />
+        </a>
+      </div>
+      <span>
+        <h4>Add an Event</h4>
+        <caption>
+          create events so we can nudge you about them.
+        </caption>
+      </span>
+    </div>
+
+    </div>
       <% } else {%>
-      <h1>You are not authorized to view this page. Please login.</h1>""
-      <% } %>
-    </main>
-
-
+      <h1>You are not authorized to view this page. Please login.</h1>
+      "" <% } %>
+    </div>
+  </div>
+</div>
