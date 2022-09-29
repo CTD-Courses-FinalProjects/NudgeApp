@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" style="margin-left: 20px" href="/api/v1/auth/dashboard">
+    <a class="navbar-brand" style="margin-left: 20px" href="/api/v1/events/dashboard">
       <img src="/logo.png" alt="logo" style="width: 40px" />
     </a>
     <% if(currentUser) {%>
@@ -18,6 +18,14 @@
     id="navbarColor03"
     style="text-align:right; margin-right: 20px;">
       <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/api/v1/events/myEvents">My Events</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/api/v1/events/addEvent">Add Events</a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link" href="/upcomingEvents">Upcoming</a>

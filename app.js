@@ -28,7 +28,7 @@ const {connectDB, storeDB} = require('./db/connect')
 const { authenticateUser, protectIndex, setCurrentUser } = require("./middleware/authentication");
 
 // //routers
-// const eventRouter = require('./routes/events');
+const eventRouter = require('./routes/events');
 const authRouter = require("./routes/auth");
 const render_index  = require("./routes/auth")
 
@@ -70,7 +70,7 @@ requiredEnvVars.forEach((item) => {
  }
 });
 
-
+//use session
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -80,11 +80,10 @@ app.use(
   })
 );
 
+//passport
 passport_init();
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 app.use(setCurrentUser);
 
 // Connect flash
@@ -101,7 +100,7 @@ app.use(function(req, res, next) {
 //routes
 app.get("/", protectIndex, render_index)
 app.use("/api/v1/auth", authRouter)
-//app.use("/api/v1/events", authenticateUser, eventRouter);
+app.use("/api/v1/events/", authenticateUser, eventRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

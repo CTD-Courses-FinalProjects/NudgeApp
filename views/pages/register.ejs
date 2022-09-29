@@ -85,8 +85,6 @@
 
 <script>
   function continueButton() {
-    console.log(document.getElementById("password2").value);
-    console.log(document.getElementById("password").value);
     const name = document.getElementById("name");
     const email = document.getElementById("email");
     const password = document.getElementById("password");
@@ -100,7 +98,6 @@
     }
 
     //validate email
-
     if (email.value) {
       const emailval = email.value.toLowerCase();
       const validEmail = emailval.match(

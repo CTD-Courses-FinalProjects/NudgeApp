@@ -1,18 +1,23 @@
-<div>
-<div class="row mt-5">
+<div class="container" >
+<div container class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body text-center">
       <%- include("../partials/messages") %>
       <div>
           <img src="/logo.png" alt="logo" style="width:100px"> 
       </div>
-      <h2>WELCOME to Nudge</h2>
-      <h4>Create an account or login</h4>
-      <a href="/api/v1/auth/register" class="btn btn-primary btn-block mb-2"
+      
+      <div class="mt-4">
+      <h2 >WELCOME to Nudge</h2>
+      <blockquote class="blockquote"> Create an account or login</blockquote>
+      <div class="container">
+      <a href="/api/v1/auth/register" class="btn btn-primary btn-block mb-3"
         >Register</a
       >
       <a href="/api/v1/auth/login" class="btn btn-secondary btn-block">Login</a>
     </div>
+    </div>
   </div>
+</div>
 </div>
 </div>
