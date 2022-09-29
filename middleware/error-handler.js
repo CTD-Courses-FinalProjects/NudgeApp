@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 
-const errorHandlerMiddleware = (err, req, res) => {
+const errorHandlerMiddleware = (err, req, res, next) => {
+  console.log("Error in error handler", err)
   let customError = {
     //set default
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
