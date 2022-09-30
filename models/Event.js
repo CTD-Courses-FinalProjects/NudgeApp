@@ -9,7 +9,7 @@ const EventSchema = new mongoose.Schema(
     },
     eventType: {
       type: String,
-      enum: ["birthday", "wedding", "other"],
+      enum: ["birthday", "wedding", "others"],
       required: [true, "Please select Event Type"],
       default: "birthday",
     },

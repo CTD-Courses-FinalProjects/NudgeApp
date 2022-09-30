@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100vw">
-  <div class="container-fluid" style="max-width: 1800px;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
     <a class="navbar-brand" style="margin-left: 20px" href="/api/v1/events/dashboard">
       <img src="/logo.png" alt="logo" style="width: 40px" />
     </a>
@@ -24,12 +24,12 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/api/v1/events/addEvent">Add Events</a>
+          <a class="nav-link" href="/api/v1/events/addEvent">Add Event</a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/upcomingEvents">Upcoming</a>
-        </li>
+        </li> -->
 
       </ul>
 
@@ -44,8 +44,8 @@
             >
             <%= currentUser.name %>
             </a>
-          <div class="dropdown-menu text-sm-right margin-sm-auto" style="width: fit-content;">
-            <a class="dropdown-item" href="/api/v1/auth/log-out" >Sign-out</a>
+          <div class="dropdown-menu text-sm-right margin-sm-auto" style="width: fit-content; margin-left: auto;">
+            <a class="dropdown-item" href="/api/v1/auth/log-out" style="text-align: center" >Sign-out</a>
           </div>
         </li>
       </ul>
