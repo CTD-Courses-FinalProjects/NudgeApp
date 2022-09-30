@@ -2,20 +2,21 @@ const mongoose = require("mongoose");
 
 const EventSchema = new mongoose.Schema(
   {
-    eventType: {
-      type: String,
-      enum: ["birthday", "wedding", "other"],
-      default: "birthday",
-    },
-    name: {
+    title: {
       type: String,
       required: [true, "Please provide event name"],
       maxlength: 50,
     },
-    date: {
+    eventType: {
+      type: String,
+      enum: ["birthday", "wedding", "others"],
+      required: [true, "Please select Event Type"],
+      default: "birthday",
+    },
+    eventDate: {
       type: Date,
       required: [true, "Please provide event date"],
-      default: Date.now
+      default: new Date()
     },
     createdBy: {
       type: mongoose.Types.ObjectId,

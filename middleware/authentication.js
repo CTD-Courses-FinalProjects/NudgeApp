@@ -17,7 +17,7 @@ const authenticateUser = (req, res, next) => {
 const protectIndex = (req, res, next) => {
   if(req.user) {
     req.flash('error_msg', 'You are already logged-in');
-    res.redirect('/api/v1/auth/dashboard')
+    res.redirect('/api/v1/events/dashboard')
   } else {
     next()
   }

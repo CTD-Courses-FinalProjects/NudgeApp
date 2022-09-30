@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" style="margin-left: 20px" href="/api/v1/auth/dashboard">
+    <a class="navbar-brand" style="margin-left: 20px" href="/api/v1/events/dashboard">
       <img src="/logo.png" alt="logo" style="width: 40px" />
     </a>
     <% if(currentUser) {%>
@@ -20,8 +20,16 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="/upcomingEvents">Upcoming</a>
+          <a class="nav-link" href="/api/v1/events/myEvents">My Events</a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/api/v1/events/addEvent">Add Event</a>
+        </li>
+
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/upcomingEvents">Upcoming</a>
+        </li> -->
 
       </ul>
 
@@ -36,8 +44,8 @@
             >
             <%= currentUser.name %>
             </a>
-          <div class="dropdown-menu text-sm-right margin-sm-auto" style="width: fit-content;">
-            <a class="dropdown-item" href="/api/v1/auth/log-out" >Sign-out</a>
+          <div class="dropdown-menu text-sm-right margin-sm-auto" style="width: fit-content; margin-left: auto;">
+            <a class="dropdown-item" href="/api/v1/auth/log-out" style="text-align: center" >Sign-out</a>
           </div>
         </li>
       </ul>
@@ -47,30 +55,3 @@
     <%}%>
   </div>
 </nav>
-
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">
-        <img src="/logo.png" alt="logo" style="width:40px" >
-      </a>
-    </div>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-
-      <li class="nav-item">Events
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a class="nav-link" href="/tasks">All Events</a></li>
-          <li><a class="nav-link" href="#">Upcoming Events</a></li>
-        </ul>
-      </li>
-
-      <li><a href="#">Page 2</a></li>
-    </ul>
-</nav> -->
-
-<!-- <% if (typeof variant != 'undefined'){%>
-          <em><%= typeof variant != 'undefined' ? variant : 'default' %></em>
-        <%}%> -->
-
-<!-- <a href="/restricted"><h2>Restricted Page</h2></a> -->

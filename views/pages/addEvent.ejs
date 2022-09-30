@@ -1,0 +1,109 @@
+<div class="mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <%- include("../partials/messages") %>
+      <h1 class="text-center mb-3">
+        <i class="fas fa-calendar-times"></i> Add Event
+      </h1>
+
+      <form action="/api/v1/events/addEvent" method="POST">
+
+        <div class="form-group">
+          <label for="title" class="form-label">Event Name/Title:*</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            placeholder="Enter Name/Title"
+            value="<%= typeof title != 'undefined' ? title : '' %>"
+            onchange="continueButton()"
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="form-group">
+          <label for="eventType" class="form-label"
+            >Event Type: *</label
+          >
+          <select
+          class="form-select"
+            style="width: 100%; height: 38px;"
+            id="eventType"
+            name="eventType"
+          >
+            <option value="" selected disabled hidden>Choose here</option>
+            <option value="birthday">Birthday</option>
+            <option value="wedding">Wedding</option>
+            <option value="others">Others</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="eventDate" class="form-label">Event Date: *</label>
+          <input
+            type="date"
+            id="eventDate"
+            name="eventDate"
+            class="form-control"
+            value="<%= typeof eventDate != 'undefined' ? eventDate : '' %>"
+            onchange="continueButton()"
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <button
+          type="submit"
+          id="submit"
+          class="btn btn-primary btn-block"
+          disabled
+        >
+          <span
+            class="spinner-border spinner-border-sm"
+            style="display: none"
+          ></span>
+          Add Event
+        </button>
+
+        <button
+          type="button"
+          id="cancel"
+          class="btn btn-secondary btn-block"
+          onclick="window.location='/api/v1/events/myEvents'"
+        >
+          Cancel
+        </button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function continueButton() {
+    const title = document.getElementById("title");
+    const eventDate = document.getElementById("eventDate");
+    const addEvent = document.getElementById("submit");
+  const select = document.getElementById("eventType")
+  console.log(select.value, "Selected value")
+    //validate name
+    if (!title.value) {
+      title.setAttribute("class", "form-control is-invalid");
+    } else {
+      title.setAttribute("class", "form-control is-valid");
+    }
+
+    //Validate date as its a required field
+    if (!eventDate.value) {
+        eventDate.setAttribute("class", " form-control is-invalid");
+    } else {
+        eventDate.setAttribute("class", " form-control is-valid");
+    }
+
+    if (title.value && eventDate.value) {
+    addEvent.setAttribute("disabled");
+    } else {
+        addEvent.removeAttribute("disabled", "");
+    }
+  }
+</script>
