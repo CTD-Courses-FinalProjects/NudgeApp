@@ -1,8 +1,9 @@
 const Event = require("../models/Event");
-const { StatusCodes } = require("http-status-codes");
+// const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
-const render_restricted = (req, res) => {
+
+const render_dashboard = (req, res) => {
   res.render("pages/dashboard");
 };
 const render_addEvent = (req, res) => {
@@ -21,7 +22,6 @@ const render_myEvents = async (req, res) => {
 
 const createEvent = async (req, res, next) => {
   const data = req.body;
-  console.log(data)
   data.createdBy = req.user._id;
   try {
     if (data.eventDate) {
@@ -36,63 +36,89 @@ const createEvent = async (req, res, next) => {
   }
 };
 
-const getEvent = async (req, res) => {
+const getEvent = async (req, res, next) => {
   try {
-    const tasks = await Event.find();
-    res.render("pages/tasks", { tasks });
+    const {
+      user: {_id: userId},
+      params: { id: eventId },
+    } = req;
+  console.log(userId, eventId)
+    const event = await Event.findOne({
+      _id: eventId,
+      createdBy: userId,
+    });
+    console.log("Event: ", event)
+    if (!event) {
+      throw new NotFoundError(`Couldn't find event with id ${eventId}`);
+    } else{
+      console.log(event.eventDate.toDateString(), "date")
+    res.render("pages/editEvent", { event });
+    }
   } catch (err) {
     res.locals.message = "Something went wrong.";
-    res.render("pages/tasks", { tasks: [] });
+    return next(err);
   }
 };
 
-const updateEvent = async (req, res) => {
+const updateEvent = async (req, res, next) => {
+  try {
   const {
-    body: {company, product},
-    user: { userId },
-    params: { id: eventid },
+    body:{title, eventType, eventDate},
+    user: { _id: userId },
+    params: { id: eventId },
   } = req;
 
-  if (company === "" || position === " ") {
-    throw new BadRequestError("Company or Position fields cannot be empty");
+  if (title === "" || eventType === "" || eventDate === "") {
+    throw new BadRequestError("Data fields cannot be empty");
   }
 
-  const job = await Event.findByIdAndUpdate(
-    { _id: jobId, createdBy: userId },
+  const updatedEvent = await Event.findByIdAndUpdate(
+    { _id: eventId, createdBy: userId },
     req.body,
     { new: true, runValidators: true }
   );
 
-  if (!job) {
-    throw new NotFoundError(`No job with id ${jobId}`);
+  if (!updatedEvent) {
+    throw new NotFoundError(`No job with id ${eventId}`);
   }
-
-  res.status(StatusCodes.OK).json({ job });
+  req.flash("success_msg", `Event: ${title}, was updated.`);
+  res.redirect("/api/v1/events/myEvents");
+}catch (err) {
+  console.log("Error has occured")
+  return next(err);
+}
 };
 
-const deleteEvent = async (req, res) => {
+const deleteEvent = async (req, res, next) => {
+try{
   const {
-    user: { userId },
-    params: { id: jobId },
+    user: {_id: userId},
+    params: { id: eventId },
   } = req;
 
-  const job = await Event.findByIdAndRemove({
-    _id: jobId,
+  const event = await Event.findByIdAndRemove({
+    _id: eventId,
     createdBy: userId,
   });
 
-  if (!job) {
-    throw new NotFoundError(`No job with id ${jobId}`);
+  if (!event) {
+    throw new NotFoundError(`No job with id ${eventId}`);
   }
-
-  res.status(StatusCodes.OK).json({ msg: "The entry was deleted." });
+  req.flash("success_msg", "The entry was deleted.");
+  // res.status(StatusCodes.OK).json({msg: "The entry was deleted."})
+  res.redirect("/api/v1/events/myEvents");
+}catch (err) {
+    console.log("Error has occured")
+    return next(err);
+  }
 };
 
 module.exports = {
-  render_restricted,
+  render_dashboard,
   render_addEvent,
   render_myEvents,
   createEvent,
   getEvent,
+  updateEvent,
   deleteEvent,
 };
