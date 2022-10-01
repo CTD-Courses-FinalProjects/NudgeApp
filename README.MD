@@ -1,9 +1,11 @@
-# <img  height="80" src="/logo.png" alt="NUDGE App Logo"> Nudge App
+# <img  height="80" src="public\logo.png" alt="NUDGE App Logo"> Nudge App
 * website: 
-
+![NUDGE App Logo](public\logo.png?raw=true "Title")
 
 ## Getting Started
 This is a [ejs](https://nextjs.org/) project bootstrapped with [`node.js and Express`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+CSS: [`Bootstrap 6.2`](https://getbootstrap.com/), [`Bootswatch-layout`](https://bootswatch.com/united/)
 
 ### Installation
 * Clone repo => git clone https://github.com/CodergirlVS/NudgeApp.git
