@@ -1,4 +1,4 @@
-<div style="text-align: center; height: 100%; width: 100%; margin-bottom: 40px;">
+<div style="text-align: center; height: 80%; width: 100%; margin-top: 100px;">
 
   <%- include("../partials/messages") %> 
   
@@ -9,11 +9,16 @@
   <div class="container mt-4">
     <h1 class="text-center"><i class="far fa-id-card"></i> My Events</h1>
 
-    <div class="container m-4" role="toolbar" style="width:fit-content">
+    <div class="container m-4 d-flex" role="toolbar" style="width:100%; justify-content: space-between;">
+      <form class="d-flex" action="/api/v1/events/search" method="GET" style="width: 90%;">
+        <input class="form-control me-sm-2" type="text" placeholder="Search by title" name="dsearch">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
       <a
         href="/api/v1/events/addEvent"
-        class="btn btn-primary"
-        style="width: 50px"
+        style="width: 50px; ;""
+        class="btn btn bg-primary"
         data-bs-toggle="tooltip"
         data-bs-placement="bottom"
         title="Add Task"
@@ -21,7 +26,10 @@
       >
         <i class="fas fa-plus"></i>
       </a>
+      
     </div>
+
+
 
     <div class="container">
        <div class="row g-3">
@@ -31,9 +39,9 @@
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
           <div
             class="card"
-            style="<%=`box-shadow: 1px 10px 20px #858b9259; border: 3px solid; border-radius: 10px; border-color: ${bgColor(event)};`%>"
+            style="<%=`height: 100%; box-shadow: 1px 10px 20px #858b9259; border: 3px solid; border-radius: 10px; border-color: ${bgColor(event)};`%>"
           >
-          <div class="card-header" style="min-height:140px;">
+          <div class="card-header d-flex" style="min-height:140px;">
             <h4 style="word-break: break-word; margin: auto">
               <%= event.title %>
             </h4>
@@ -44,17 +52,23 @@
                 <h5 class="card-text">
                   <%= event.eventDate.toString().slice(0,15) %>
                 </h5>
+                <p>  <%= event.eventNotes %></p>
               </div>
 
               <div
                 class="d-flex row"
                 style="justify-content: flex-end; width: 100%; margin-top: 10px;"
               >
-                <a href="<%="/api/v1/events/editEvent/" + event.id %>
-                  class="btn btn">
+                <a href="<%= "/api/v1/events/editEvent/" + event.id %>"
+                  class="btn btn"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Edit Task"
+                  aria-describedby="tooltip758359"
+                 >
                   <i class="fas fa-pen" style="padding: 10px; color: purple"></i>
                 </a>
-                <a href="<%="/api/v1/events/deleteEvent/" + event.id %>
+                <a href="<%= "/api/v1/events/deleteEvent/" + event.id %>"
                   class="btn btn">
                   <i class="far fa-trash-alt" style="padding: 10px"></i>
                 </a>

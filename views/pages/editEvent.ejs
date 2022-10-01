@@ -2,11 +2,10 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <%- include("../partials/messages") %>
-      <h1 class="text-center mb-3">
-        <i class="fas fa-pen"></i> Edit Event
-      </h1>
-    
-      <form action= <%= "/api/v1/events/editEvent/" + event.id %> method="POST">
+      <h1 class="text-center mb-3"><i class="fas fa-pen"></i> Edit Event</h1>
+
+      <form action="<%" ="/api/v1/events/editEvent/" + event.id %>
+        method="POST">
 
         <div class="form-group">
           <label for="title" class="form-label">Event Name/Title:*</label>
@@ -23,16 +22,14 @@
         </div>
 
         <div class="form-group">
-          <label for="eventType" class="form-label"
-            >Event Type: *</label
-          >
+          <label for="eventType" class="form-label">Event Type: *</label>
           <select
-          class="form-select"
-            style="width: 100%; height: 38px;"
+            class="form-select"
+            style="width: 100%; height: 38px"
             id="eventType"
             name="eventType"
           >
-          <option value="">Choose here</option>
+            <option value="">Choose here</option>
             <option value="birthday">Birthday</option>
             <option value="wedding">Wedding</option>
             <option value="others">Others</option>
@@ -52,47 +49,57 @@
           <div class="valid-feedback">Looks good!</div>
         </div>
 
+        <div class="form-group">
+          <label for="eventNotes" class="form-label mt-4">Notes:</label>
+          <textarea
+            class="form-control"
+            id="eventNotes"
+            name="eventNotes"
+            autocomplete
+            rows="3"
+            placeholder="<%= event.eventNotes %>"
+            ></textarea>
+        </div>
+
         <div class="d-flex">
+          <button
+            type="button"
+            id="cancel"
+            class="btn btn-secondary btn-block"
+            style="margin: 0px 5px"
+            onclick="window.location='/api/v1/events/myEvents'"
+          >
+            Cancel
+          </button>
 
           <button
-          type="button"
-          id="cancel"
-          class="btn btn-secondary btn-block"
-          style="margin: 0px 5px;"
-          onclick= "window.location='/api/v1/events/myEvents'"
-        >
-          Cancel
-        </button>
-
-        <button
-          type="submit"
-          id="submit"
-          class="btn btn-primary btn-block"
-          style="margin: 0px 5px;"
-          disabled
-        >
-          <span
-            class="spinner-border spinner-border-sm"
-            style="display: none"
-          ></span>
-         Update Event
-        </button>
-
+            type="submit"
+            id="submit"
+            class="btn btn-primary btn-block"
+            style="margin: 0px 5px"
+            disabled
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              style="display: none"
+            ></span>
+            Update Event
+          </button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
 
 <script>
+  //set selected option current
+  const optionVal = "<%= event.eventType %>".toLowerCase();
+  $(`#eventType > option[value *= ${optionVal}]`).attr("selected", true);
 
-//set selected option current
-const optionVal = '<%= event.eventType %>'.toLowerCase();
-$(`#eventType > option[value *= ${optionVal}]`).attr('selected',true);
-
-//set default value for the date to match the one coming from db.
-document.getElementById('eventDate').valueAsDate = new Date('<%= event.eventDate %>')
+  //set default value for the date to match the one coming from db.
+  document.getElementById("eventDate").valueAsDate = new Date(
+    "<%= event.eventDate %>"
+  );
 
   function continueButton() {
     const title = document.getElementById("title");
@@ -108,13 +115,13 @@ document.getElementById('eventDate').valueAsDate = new Date('<%= event.eventDate
 
     //Validate date as its a required field
     if (!eventDate.value) {
-        eventDate.setAttribute("class", " form-control is-invalid");
+      eventDate.setAttribute("class", " form-control is-invalid");
     } else {
-        eventDate.setAttribute("class", " form-control is-valid");
+      eventDate.setAttribute("class", " form-control is-valid");
     }
 
     if (title.value && eventDate.value) {
-    addEvent.removeAttribute("disabled", "");
+      addEvent.removeAttribute("disabled", "");
     } else {
       addEvent.setAttribute("disabled");
     }
