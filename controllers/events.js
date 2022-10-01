@@ -82,6 +82,7 @@ const getEvent = async (req, res, next) => {
 };
 
 const updateEvent = async (req, res, next) => {
+  console.log(req.body)
   try {
   const {
     body:{title, eventType, eventDate},
@@ -106,7 +107,7 @@ const updateEvent = async (req, res, next) => {
   res.redirect("/api/v1/events/myEvents");
 }catch (err) {
   console.log("Error has occured")
-  req.flash("error_msg", `Event: ${title}, was not updated. Something went wrong`);
+  req.flash("error_msg", "Event was not updated. Something went wrong");
   return next(err);
 }
 };

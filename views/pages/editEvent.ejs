@@ -4,9 +4,7 @@
       <%- include("../partials/messages") %>
       <h1 class="text-center mb-3"><i class="fas fa-pen"></i> Edit Event</h1>
 
-      <form action="<%" ="/api/v1/events/editEvent/" + event.id %>
-        method="POST">
-
+      <form action=<%= "/api/v1/events/editEvent/" + event.id %> method="POST">
         <div class="form-group">
           <label for="title" class="form-label">Event Name/Title:*</label>
           <input
@@ -55,10 +53,11 @@
             class="form-control"
             id="eventNotes"
             name="eventNotes"
+            placeholder="Add your notes here..."
             autocomplete
             rows="3"
-            placeholder="<%= event.eventNotes %>"
-            ></textarea>
+            onchange="continueButton()"
+            ><%= event.eventNotes %></textarea>
         </div>
 
         <div class="d-flex">
@@ -105,6 +104,7 @@
     const title = document.getElementById("title");
     const eventDate = document.getElementById("eventDate");
     const addEvent = document.getElementById("submit");
+    const eventNotes = $("#eventNotes").val();
 
     //validate name
     if (!title.value) {
@@ -120,7 +120,7 @@
       eventDate.setAttribute("class", " form-control is-valid");
     }
 
-    if (title.value && eventDate.value) {
+    if (title.value || eventDate.value || eventNotes) {
       addEvent.removeAttribute("disabled", "");
     } else {
       addEvent.setAttribute("disabled");
