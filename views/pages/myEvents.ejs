@@ -29,8 +29,6 @@
       
     </div>
 
-
-
     <div class="container">
        <div class="row g-3">
       <% if (events.length > 0) { %> 
@@ -47,12 +45,12 @@
             </h4>
           </div>
 
-            <div class="card-body">
+            <div class="card-body d-flex flex-column justify-content-between">
               <div class="card-title">
-                <h5 class="card-text">
-                  <%= event.eventDate.toString().slice(0,15) %>
+                <h5 class="card-text"><b>
+                  <%= event.eventDate.toString().slice(0,15) %></b>
                 </h5>
-                <p>  <%= event.eventNotes %></p>
+                <p style="text-align:start"> <%= event.eventNotes %></p>
               </div>
 
               <div
