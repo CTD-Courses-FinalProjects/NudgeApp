@@ -6,8 +6,8 @@ Nudge is an app which tracks users events. Users can add, edit and delete any of
 ## Getting Started
 This is a [ejs](https://nextjs.org/) project bootstrapped with [`node.js and Express`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-*CSS: [`Bootstrap 6.2`](https://getbootstrap.com/), [`Bootswatch-layout`](https://bootswatch.com/united/)
-*Authentication: [`passport`](https://www.passportjs.org/)
+* CSS: [`Bootstrap 6.2`](https://getbootstrap.com/), [`Bootswatch-layout`](https://bootswatch.com/united/)
+* Authentication: [`passport`](https://www.passportjs.org/)
 
 ### Installation
 * Clone repo => git clone https://github.com/CodergirlVS/NudgeApp.git
