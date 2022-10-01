@@ -1,25 +1,16 @@
-<div style="text-align: center; height: 100%; width: 100%">
+<div style="text-align: center; height: 100%; width: 100%; margin-bottom: 40px;">
 
   <%- include("../partials/messages") %> 
-
-  <% const bgColor = (event) => { 
-    let color = 'blue'; 
-    if(event.eventType === 'birthday') { 
-      color='red';
-    } else if(event.eventType === 'wedding'){
-      color='purple';
-    }
-  return color;
-  } %>
+  
+  <% const bgColor = (event) => { let
+  color = '#1B4571'; if(event.eventType === 'birthday') { color='#e95420'; } else
+  if(event.eventType === 'wedding'){ color='#F667E7'; } return color; } %>
 
   <div class="container mt-4">
-    <h1 class="text-center mb-3"><i class="far fa-id-card"></i> My Events</h1>
+    <h1 class="text-center"><i class="far fa-id-card"></i> My Events</h1>
 
-
-    <div class="d-flex flex-column">
-
-      <div class = "btn-toolbar" role = "toolbar" style="padding: 20px;">
-          <a
+    <div class="container m-4" role="toolbar" style="width:fit-content">
+      <a
         href="/api/v1/events/addEvent"
         class="btn btn-primary"
         style="width: 50px"
@@ -30,71 +21,57 @@
       >
         <i class="fas fa-plus"></i>
       </a>
-      </div>
+    </div>
 
-
-      <div
-        class="d-flex m-3 flex-wrap"
-        style="width: 100%; justify-content: center"
-      >
-        <% if (events.length > 0) { %> 
+    <div class="container">
+       <div class="row g-3">
+      <% if (events.length > 0) { %> 
+        <% events.forEach(function(event){ %>
          
-          <% events.forEach(function(event){ %>
-
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3">
           <div
-            class="card mb-3 d-flex row card-body"
-            style="<%=`box-shadow: 1px 10px 20px #858b9259; padding: 0; margin: 10px; width: 370px; border: 3px solid; border-radius: 10px; border-color: ${bgColor(event)};`%>"
+            class="card"
+            style="<%=`box-shadow: 1px 10px 20px #858b9259; border: 3px solid; border-radius: 10px; border-color: ${bgColor(event)};`%>"
           >
-            <div
-              class="d-flex"
-              style="height: 100%; width: 60%; justify-content: center"
-            >
-              <h4 style="word-break: break-word; margin: auto"><%= event.title %></h4>
-            </div>
+          <div class="card-header" style="min-height:140px;">
+            <h4 style="word-break: break-word; margin: auto">
+              <%= event.title %>
+            </h4>
+          </div>
 
-            <div
-              class="d-flex flex-column"
-              style=" height: 100%; justify-content: space-around;"
-            >
-              <div class="d-flex flex-column">
+            <div class="card-body">
+              <div class="card-title">
                 <h5 class="card-text">
                   <%= event.eventDate.toString().slice(0,15) %>
                 </h5>
-
-                <% if(event.eventType === 'birthday') { %>
-                <p class="card-text">years</p>
-                <%}%>
               </div>
 
               <div
                 class="d-flex row"
-                style="justify-content: flex-end; width: 100%"
+                style="justify-content: flex-end; width: 100%; margin-top: 10px;"
               >
-                <a href=<%= "/api/v1/events/editEvent/" + event.id %>
+                <a href="<%="/api/v1/events/editEvent/" + event.id %>
                   class="btn btn">
-                  <i class="fas fa-pen"></i>
+                  <i class="fas fa-pen" style="padding: 10px; color: purple"></i>
                 </a>
-                <a href=<%= "/api/v1/events/deleteEvent/" + event.id %>
+                <a href="<%="/api/v1/events/deleteEvent/" + event.id %>
                   class="btn btn">
-                  <i class="far fa-trash-alt"></i>
+                  <i class="far fa-trash-alt" style="padding: 10px"></i>
                 </a>
               </div>
 
             </div>
-          
+
+          </div>
           </div>
 
-        <%})%>
-
+      <%})%> 
       <% } else { %>
       <h2>There are no events to display.</h2>
       <% } %>
-      </div>
-
     </div>
-
-
-</div>
+    </div>
+  </div>
 </div>
 
 <script>

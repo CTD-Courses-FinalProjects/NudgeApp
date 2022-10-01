@@ -15,7 +15,7 @@ const render_myEvents = async (req, res) => {
   const events = await Event.find({ createdBy: req.user._id }).sort("eventDate");
   res.render("pages/myEvents", {events});
   } catch (err) {
-    req.flash("locals.errors", "Something went wrong.");
+    req.flash("locals.errors", "Something went wrong rendering myEvents page.");
     res.render("pages/myEvents", { events: [] });
   }
 };
