@@ -13,16 +13,39 @@ const render_addEvent = (req, res) => {
 const render_myEvents = async (req, res) => {
   try{
   const events = await Event.find({ createdBy: req.user._id }).sort("eventDate");
-  res.render("pages/myEvents", {events});
+  if(events) {
+    res.render("pages/myEvents", {events});
+  }else {
+    req.flash("error_msg", "There are no events. Please add some.");
+    res.render("pages/myEvents", { events: [] });
+  }
+  
   } catch (err) {
-    req.flash("locals.errors", "Something went wrong.");
+    req.flash("error", "Something went wrong rendering myEvents page.");
     res.render("pages/myEvents", { events: [] });
   }
 };
 
+const searchedEvents = async(req, res) => {
+  try{
+  const searchedField = req.query.dsearch;
+  const events = await Event.find({title:{'$regex':searchedField, $options: "i"}});
+  if(events) {
+    res.render("pages/myEvents", {events});
+  }else {
+    req.flash("error_msg", "No matching results found.");
+     res.render("pages/myEvents", { events: [] });
+  }
+  } catch (err) {
+    req.flash("error", "Something went wrong rendering myEvents page."); 
+  }
+};
+
+
 const createEvent = async (req, res, next) => {
   const data = req.body;
   data.createdBy = req.user._id;
+  console.log(data, "Cre event")
   try {
     if (data.eventDate) {
       req.body.eventDate = new Date(data.eventDate);
@@ -42,20 +65,18 @@ const getEvent = async (req, res, next) => {
       user: {_id: userId},
       params: { id: eventId },
     } = req;
-  console.log(userId, eventId)
     const event = await Event.findOne({
       _id: eventId,
       createdBy: userId,
     });
-    console.log("Event: ", event)
+
     if (!event) {
       throw new NotFoundError(`Couldn't find event with id ${eventId}`);
     } else{
-      console.log(event.eventDate.toDateString(), "date")
     res.render("pages/editEvent", { event });
     }
   } catch (err) {
-    res.locals.message = "Something went wrong.";
+    res.locals.message = "Something went wrong in getting single event.";
     return next(err);
   }
 };
@@ -85,6 +106,7 @@ const updateEvent = async (req, res, next) => {
   res.redirect("/api/v1/events/myEvents");
 }catch (err) {
   console.log("Error has occured")
+  req.flash("error_msg", `Event: ${title}, was not updated. Something went wrong`);
   return next(err);
 }
 };
@@ -121,4 +143,5 @@ module.exports = {
   getEvent,
   updateEvent,
   deleteEvent,
+  searchedEvents
 };

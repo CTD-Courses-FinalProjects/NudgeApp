@@ -18,6 +18,10 @@ const EventSchema = new mongoose.Schema(
       required: [true, "Please provide event date"],
       default: new Date()
     },
+    eventNotes:{
+      type: String,
+      maxlength: 500,
+    },
     createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",

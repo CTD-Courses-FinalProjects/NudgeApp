@@ -52,6 +52,11 @@
           <div class="valid-feedback">Looks good!</div>
         </div>
 
+        <div class="form-group">
+          <label for="eventNotes" class="form-label mt-4">Notes:</label>
+          <textarea class="form-control" id="eventNotes" name="eventNotes" rows="3"></textarea>
+        </div>
+
         <button
           type="submit"
           id="submit"
@@ -85,7 +90,7 @@
     const eventDate = document.getElementById("eventDate");
     const addEvent = document.getElementById("submit");
   const select = document.getElementById("eventType")
-  console.log(select.value, "Selected value")
+
     //validate name
     if (!title.value) {
       title.setAttribute("class", "form-control is-invalid");
