@@ -1,3 +1,6 @@
-const notFound = (req, res) => res.status(404).send('Route does not exist')
+const notFound = (req, res) => {
+    const url = req.url;
+    res.status(404).redirect('/not-found' + `?page=${url}`)
+}
 
 module.exports = notFound
