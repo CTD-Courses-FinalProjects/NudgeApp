@@ -89,7 +89,7 @@
     const title = document.getElementById("title");
     const eventDate = document.getElementById("eventDate");
     const addEvent = document.getElementById("submit");
-  const select = document.getElementById("eventType")
+    const select = document.getElementById("eventType")
 
     //validate name
     if (!title.value) {
@@ -106,9 +106,9 @@
     }
 
     if (title.value && eventDate.value) {
-    addEvent.removeAttribute("disabled", "");
+   addEvent.removeAttribute("disabled", "true");
     } else {
-    addEvent.setAttribute("disabled"); 
+    addEvent.setAttribute("disabled", 'true');
     }
   }
 </script>
