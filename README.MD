@@ -1,5 +1,5 @@
 # <img  height="80" src="public\logo.png" alt="NUDGE App Logo"> Nudge App
-* website: 
+* website: https://nudge-app-node-project.herokuapp.com/ 
 
 Nudge is an app which tracks users events. Users can add, edit and delete any of their events.
 
