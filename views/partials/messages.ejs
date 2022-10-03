@@ -9,7 +9,7 @@
 
 <!-- all success messages -->
 <% }); %> <% } %> <% if(success_msg != ''){ %>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show d-inline" role="alert">
   <%= success_msg %>
   <button
     type="button"
@@ -23,7 +23,7 @@
 
 <!-- all warning alerts -->
 <% } %> <% if(error_msg != ''){ %>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show d-inline" role="alert">
   <%= error_msg %>
   <button
     type="button"
@@ -37,7 +37,7 @@
 <% } %> <% if(error != ''){ %>
 
 <!-- all passport errors -->
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-danger alert-dismissible fade show d-inline" role="alert">
   <%= error %>
   <button
     type="button"
