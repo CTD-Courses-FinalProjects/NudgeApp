@@ -122,9 +122,9 @@
     }
 
     if (title.value && eventDate.value) {
-      updateEvent.removeAttribute("disabled", "");
+      updateEvent.removeAttribute("disabled", "true");
     } else {
-      updateEvent.setAttribute("disabled");
+      updateEvent.setAttribute("disabled", 'true');
     }
   }
 </script>
