@@ -45,7 +45,6 @@ const searchedEvents = async(req, res) => {
 const createEvent = async (req, res, next) => {
   const data = req.body;
   data.createdBy = req.user._id;
-  console.log(data, "Cre event")
   try {
     if (data.eventDate) {
       req.body.eventDate = new Date(data.eventDate);
@@ -60,6 +59,7 @@ const createEvent = async (req, res, next) => {
 };
 
 const getEvent = async (req, res, next) => {
+  req.session.backURL = "";
   try {
     const {
       user: {_id: userId},
@@ -71,18 +71,17 @@ const getEvent = async (req, res, next) => {
     });
 
     if (!event) {
+      req.session.backURL = "/api/v1/events/myEvents"
       throw new NotFoundError(`Couldn't find event with id ${eventId}`);
     } else{
     res.render("pages/editEvent", { event });
     }
   } catch (err) {
-    res.locals.message = "Something went wrong in getting single event.";
     return next(err);
   }
 };
 
 const updateEvent = async (req, res, next) => {
-  console.log(req.body)
   try {
   const {
     body:{title, eventType, eventDate},
@@ -113,6 +112,7 @@ const updateEvent = async (req, res, next) => {
 };
 
 const deleteEvent = async (req, res, next) => {
+  req.session.backURL = "";
 try{
   const {
     user: {_id: userId},
@@ -125,10 +125,10 @@ try{
   });
 
   if (!event) {
+    req.session.backURL = "/api/v1/events/myEvents"
     throw new NotFoundError(`No job with id ${eventId}`);
   }
   req.flash("success_msg", "The entry was deleted.");
-  // res.status(StatusCodes.OK).json({msg: "The entry was deleted."})
   res.redirect("/api/v1/events/myEvents");
 }catch (err) {
     console.log("Error has occured")

@@ -103,8 +103,9 @@
   function continueButton() {
     const title = document.getElementById("title");
     const eventDate = document.getElementById("eventDate");
-    const addEvent = document.getElementById("submit");
+    const updateEvent = document.getElementById("submit");
     const eventNotes = $("#eventNotes").val();
+
 
     //validate name
     if (!title.value) {
@@ -120,10 +121,10 @@
       eventDate.setAttribute("class", " form-control is-valid");
     }
 
-    if (title.value || eventDate.value || eventNotes) {
-      addEvent.removeAttribute("disabled", "");
+    if (title.value && eventDate.value) {
+      updateEvent.removeAttribute("disabled", "");
     } else {
-      addEvent.setAttribute("disabled");
+      updateEvent.setAttribute("disabled");
     }
   }
 </script>

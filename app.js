@@ -30,11 +30,12 @@ const { authenticateUser, protectIndex, setCurrentUser } = require("./middleware
 // //routers
 const eventRouter = require('./routes/events');
 const authRouter = require("./routes/auth");
-const render_index  = require("./routes/auth")
+const render_index  = require("./routes/auth");
 
 //error handler
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const notFoundMiddleware = require("./middleware/not-found");
+const { render_notFound } = require("./controllers/auth");
 
 
 //connect to views
@@ -101,8 +102,10 @@ app.use(function(req, res, next) {
 app.get("/", protectIndex, render_index)
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/events/", authenticateUser, eventRouter);
+app.use("/not-found", render_notFound)
+app.all('*', notFoundMiddleware);
 
-app.use(notFoundMiddleware);
+//app.use();
 app.use(errorHandlerMiddleware);
 
 const port = process.env.port || 3000;

@@ -4,6 +4,10 @@ const render_index = (req, res) => {
   res.render("pages/index");
 };
 
+const render_notFound = (req, res) => {
+const url = req.query.page;
+  res.render("pages/not-found", {url})
+}
 const render_signup = (req, res) => {
   res.render("pages/register");
 };
@@ -47,4 +51,5 @@ module.exports = {
   register,
   render_login,
   log_out,
+  render_notFound,
 };
