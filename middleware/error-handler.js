@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 
 const errorHandlerMiddleware = (err, req, res, next) => {
+  console.log(err)
   let customError = {
     //set default
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
@@ -20,10 +21,11 @@ const errorHandlerMiddleware = (err, req, res, next) => {
         customError.statusCode = 400;
   }
 
-  //Errors when ids not match the modal.
+  //Errors when ids not match the model.
   if (err.name === 'CastError') {
-    customError.msg = `No item found with id : ${err.value._id}`
+    customError.msg = `No item found with id : ${err.value}`
     customError.statusCode = 404
+    req.session.backURL = "/api/v1/events/dashboard"
   }
 
   req.flash("error",[customError.msg] )
