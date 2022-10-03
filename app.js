@@ -5,7 +5,7 @@ const path = require('path')
 const flash = require('connect-flash');
 
 //extra security packages
-// const helmet = require('helmet');
+const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
@@ -54,7 +54,14 @@ app.use(
   })
 )
 app.use(express.json());
-// app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: true,
+    directives: {
+      "script-src": ["'self'", "https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/"],
+    },
+  },
+}));
 app.use(cors());
 app.use(xss());
 
