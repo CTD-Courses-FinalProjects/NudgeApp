@@ -5,7 +5,7 @@ const path = require('path')
 const flash = require('connect-flash');
 
 //extra security packages
-// const helmet = require('helmet');
+const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
@@ -54,18 +54,16 @@ app.use(
   })
 )
 app.use(express.json());
-// app.use(helmet({
-//   contentSecurityPolicy: {
-//     directives: {
-//     defaultSrc: ["'self'"],
-//     imgSrc: ["'self'"],
-//     scriptSrc: ["'self'", "https://code.jquery.com/jquery-3.5.1.slim.min.js/"],
-//     objectSrc: ["'none'"],
-//     styleSrc: ["'self'", "https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js/", "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js/"],
-//     upgradeInsecureRequests: [],
-//   },
-// }
-// }));
+app.use(helmet(
+   {
+ contentSecurityPolicy: {
+     directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "script-src": ["'self'", "'unsafe-inline'", "example.com"],
+  },
+}
+}
+));
 app.use(cors());
 app.use(xss());
 
@@ -119,7 +117,7 @@ app.all('*', notFoundMiddleware);
 //app.use();
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
