@@ -24,7 +24,7 @@
 
         <div class="form-group">
           <label for="eventType" class="form-label"
-            >Event Type: *</label
+            >Event Type: </label
           >
           <select
           class="form-select"
@@ -32,8 +32,8 @@
             id="eventType"
             name="eventType"
           >
-            <option value="" selected disabled hidden>Choose here</option>
-            <option value="birthday">Birthday</option>
+            <!-- <option value="" selected disabled hidden>Choose here</option> -->
+            <option value="birthday" selected>Birthday</option>
             <option value="wedding">Wedding</option>
             <option value="others">Others</option>
           </select>
@@ -105,7 +105,7 @@
         eventDate.setAttribute("class", " form-control is-valid");
     }
 
-    if (title.value && eventDate.value) {
+    if (title.value && eventDate.value && select.value) {
    addEvent.removeAttribute("disabled", "true");
     } else {
     addEvent.setAttribute("disabled", 'true');
